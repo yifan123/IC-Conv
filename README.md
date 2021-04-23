@@ -96,20 +96,20 @@ We adjust the learning rate of resnet backbone in MMPose and get better baseline
 |                           Backbone                           | Input Size |    AP    |                    dilation_pattern                     |                          checkpoint                          |
 | :----------------------------------------------------------: | :--------: | :------: | :-----------------------------------------------------: | :----------------------------------------------------------: |
 | [R50(mmpose)](https://github.com/open-mmlab/mmpose/tree/master/configs/bottom_up/resnet) |  640x640   |   47.9   |                            ~                            |                              ~                               |
-|        [R50](config/human_pose/res50_coco_640x640.py)        |  640x640   |   51.0   |                            ~                            |                              ~                               |
-|   [IC-R50](config/human_pose/ic_res50_k13_coco_640x640.py)   |  640x640   | **62.2** | [pattern](pattern_zoo/human_pose/ic_resnet50_k13.json)  | [ckpt](ckpt/human_pose/ic_res50_k13_coco_640x640_lr0.001/ckpt.pth)/[imagenet_retrain_ckpt](ckpt/human_pose/ic_res50_k13_imagenet_retrain/ckpt.pth) |
-|       [R101](config/human_pose/res101_coco_640x640.py)       |  640x640   |   55.5   |                            ~                            |                              ~                               |
-|  [IC-R101](config/human_pose/ic_res101_k13_coco_640x640.py)  |  640x640   | **63.3** | [pattern](pattern_zoo/human_pose/ic_resnet101_k13.json) | [ckpt](ckpt/human_pose/ic_res101_k13_coco_640x640_lr0.0005/ckpt.pth)/[imagenet_retrain_ckpt](ckpt/human_pose/ic_res101_k13_imagenet_retrain/ckpt.pth) |
+|        [R50](human_pose/config/res50_coco_640x640.py)        |  640x640   |   51.0   |                            ~                            |                              ~                               |
+|   [IC-R50](human_pose/config/ic_res50_k13_coco_640x640.py)   |  640x640   | **62.2** | [pattern](pattern_zoo/human_pose/ic_resnet50_k13.json)  | [ckpt](ckpt/human_pose/ic_res50_k13_coco_640x640_lr0.001/ckpt.pth)/[imagenet_retrain_ckpt](ckpt/human_pose/ic_res50_k13_imagenet_retrain/ckpt.pth) |
+|       [R101](human_pose/config/res101_coco_640x640.py)       |  640x640   |   55.5   |                            ~                            |                              ~                               |
+|  [IC-R101](human_pose/config/ic_res101_k13_coco_640x640.py)  |  640x640   | **63.3** | [pattern](pattern_zoo/human_pose/ic_resnet101_k13.json) | [ckpt](ckpt/human_pose/ic_res101_k13_coco_640x640_lr0.0005/ckpt.pth)/[imagenet_retrain_ckpt](ckpt/human_pose/ic_res101_k13_imagenet_retrain/ckpt.pth) |
 
 ##### Results on COCO val2017 with multi-scale test. 3 default scales ([2, 1, 0.5]) are used
 
 |                           Backbone                           | Input Size |    AP    |
 | :----------------------------------------------------------: | :--------: | :------: |
 | [R50(mmpose)](https://github.com/open-mmlab/mmpose/tree/master/configs/bottom_up/resnet) |  640x640   |   52.5   |
-|        [R50](config/human_pose/res50_coco_640x640.py)        |  640x640   |   55.8   |
-|   [IC-R50](config/human_pose/ic_res50_k13_coco_640x640.py)   |  640x640   | **65.8** |
-|       [R101](config/human_pose/res101_coco_640x640.py)       |  640x640   |   60.2   |
-|  [IC-R101](config/human_pose/ic_res101_k13_coco_640x640.py)  |  640x640   | **68.5** |
+|        [R50](human_pose/config/res50_coco_640x640.py)        |  640x640   |   55.8   |
+|   [IC-R50](human_pose/config/ic_res50_k13_coco_640x640.py)   |  640x640   | **65.8** |
+|       [R101](human_pose/config/res101_coco_640x640.py)       |  640x640   |   60.2   |
+|  [IC-R101](human_pose/config/ic_res101_k13_coco_640x640.py)  |  640x640   | **68.5** |
 
 ## Acknowledgement
 
