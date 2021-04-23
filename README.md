@@ -21,33 +21,45 @@ Extract the file to get the following directory tree
 
 ### Easy Use
 
-The current implementation is coupled to specific downstream tasks. [OpenMMLab](https://github.com/open-mmlab) users can quickly use IC-Conv in the following simple ways. 
+Users can quickly use IC-Conv in the following simple ways. 
 
 ```python
-from models import IC_ResNet
+from model.ic_resnet import ic_resnet50
 import torch
-net = IC_ResNet(depth=50,pattern_path='pattern_zoo/detection/ic_r50_k9.json')
-net.eval()
-inputs = torch.rand(1, 3, 32, 32)
+
+pattern_path = 'pattern_zoo/detection/ic_resnet50_k9.json'
+load_path = 'ckpt/detection/r50_imagenet_retrain/ckpt.pth.tar'
+
+net = ic_resnet50(pattern_path=pattern_path)
+state = torch.load(load_path, 'cpu')
+net.load_state_dict(state, strict=False)
+state_keys = set(state.keys())
+model_keys = set(net.state_dict().keys())
+missing_keys = model_keys - state_keys
+print(missing_keys)
+inputs = torch.rand(1, 3, 224, 224)
 outputs = net.forward(inputs)
+print(outputs.shape)
 ```
 
 ### For 2d Human Pose Estimation using MMPose
 
+[MMPose](https://github.com/open-mmlab/mmpose) users can use IC-Conv in the following ways. 
+
 1. Copying the config files to the config path of mmpose, such as
 
 ```bash
-cp config/human_pose/ic_res50_k13_coco_640x640.py your_mmpose_path/mmpose/configs/bottom_up/resnet/coco/ic_res50_k13_coco_640x640.py
+cp human_pose/config/ic_res50_k13_coco_640x640.py your_mmpose_path/mmpose/configs/bottom_up/resnet/coco/ic_res50_k13_coco_640x640.py
 ```
 
 2. Copying the inception conv files to the model path of mmpose,
 
 ```bash
-cp model/ic_conv2d.py your_mmpose_path/mmpose/mmpose/models/backbones/ic_conv2d.py
-cp model/ic_resnet.py your_mmpose_path/mmpose/mmpose/models/backbones/ic_resnet.py
+cp human_pose/model/ic_conv2d.py your_mmpose_path/mmpose/mmpose/models/backbones/ic_conv2d.py
+cp human_pose/model/ic_resnet.py your_mmpose_path/mmpose/mmpose/models/backbones/ic_resnet.py
 ```
 
-3. Running it directly like [MMPose](https://github.com/open-mmlab/mmpose/blob/master/docs/getting_started.md).
+3. Running it directly like [this](https://github.com/open-mmlab/mmpose/blob/master/docs/getting_started.md).
 
 ## Model Zoo
 
@@ -59,25 +71,21 @@ For users with limited computing power, you can directly reuse our provided IC-C
 
 #### Object Detection
 
-|     Detector     |   Backbone    |  Lr  |  AP  |                dilation_pattern                 |                          checkpoint                          |
-| :--------------: | :-----------: | :--: | :--: | :---------------------------------------------: | :----------------------------------------------------------: |
-| Faster-RCNN-FPN  |    IC-R50     |  1x  | 38.9 | [pattern](pattern_zoo/detection/ic_r50_k9.json) | [ckpt](ckpt/detection/faster-rcnn-ic-r50/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/r50_imagenet_retrain/ckpt.pth.tar) |
-| Faster-RCNN-FPN  |    IC-R101    |  1x  | 41.9 |   [pattern](pattern_zoo/ic_resnet101_k9.json)   | [ckpt](ckpt/detection/faster-rcnn-ic-r101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/r101_imagenet_retrain/ckpt.pth.tar) |
-| Faster-RCNN-FPN  | IC-X101-32x4d |  1x  | 42.1 | [pattern](pattern_zoo/ic_resnext_32x4d_k9.json) | [ckpt](ckpt/detection/faster-rcnn-ic-x101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/x101_imagenet_retrain/ckpt.pth.tar) |
-| Cascade-RCNN-FPN |    IC-R50     |  1x  | 42.4 | [pattern](pattern_zoo/detection/ic_r50_k9.json) | [ckpt](ckpt/detection/cascade-rcnn-ic-r50/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/r50_imagenet_retrain/ckpt.pth.tar) |
-| Cascade-RCNN-FPN |    IC-R101    |  1x  | 45.0 |   [pattern](pattern_zoo/ic_resnet101_k9json)    | [ckpt](ckpt/detection/cascade-rcnn-ic-r101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/r101_imagenet_retrain/ckpt.pth.tar) |
-| Cascade-RCNN-FPN | IC-X101-32x4d |  1x  | 45.7 | [pattern](pattern_zoo/ic_resnext_32x4d_k9.json) | [ckpt](ckpt/detection/cascade-rcnn-ic-x101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/x101_imagenet_retrain/ckpt.pth.tar) |
+|     Detector     | Backbone |  Lr  |  AP  |                   dilation_pattern                    |                          checkpoint                          |
+| :--------------: | :------: | :--: | :--: | :---------------------------------------------------: | :----------------------------------------------------------: |
+| Faster-RCNN-FPN  |  IC-R50  |  1x  | 38.9 | [pattern](pattern_zoo/detection/ic_resnet50_k9.json)  | [ckpt](ckpt/detection/faster-rcnn-ic-r50/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/r50_imagenet_retrain/ckpt.pth.tar) |
+| Faster-RCNN-FPN  | IC-R101  |  1x  | 41.9 | [pattern](pattern_zoo/detection/ic_resnet101_k9.json) | [ckpt](ckpt/detection/faster-rcnn-ic-r101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/r101_imagenet_retrain/ckpt.pth.tar) |
+| Cascade-RCNN-FPN |  IC-R50  |  1x  | 42.4 | [pattern](pattern_zoo/detection/ic_resnet50_k9.json)  | [ckpt](ckpt/detection/cascade-rcnn-ic-r50/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/r50_imagenet_retrain/ckpt.pth.tar) |
+| Cascade-RCNN-FPN | IC-R101  |  1x  | 45.0 | [pattern](pattern_zoo/detection/ic_resnet101_k9json)  | [ckpt](ckpt/detection/cascade-rcnn-ic-r101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/detection/r101_imagenet_retrain/ckpt.pth.tar) |
 
 #### Instance Segmentation
 
-|     Detector     |   Backbone    |  Lr  | box AP | mask AP |                  dilation_pattern                  |                          checkpoint                          |
-| :--------------: | :-----------: | :--: | :----: | :-----: | :------------------------------------------------: | :----------------------------------------------------------: |
-|  Mask-RCNN-FPN   |    IC-R50     |  1x  |  40.0  |  35.9   | [pattern](pattern_zoo/segmentation/ic_r50_k9.json) | [ckpt](ckpt/segmentation/faster-rcnn-ic-r50/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/r50_imagenet_retrain/ckpt.pth.tar) |
-|  Mask-RCNN-FPN   |    IC-R101    |  1x  |  42.6  |  37.9   |    [pattern](pattern_zoo/ic_resnet101_k9.json)     | [ckpt](ckpt/segmentation/faster-rcnn-ic-r101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/r101_imagenet_retrain/ckpt.pth.tar) |
-|  Mask-RCNN-FPN   | IC-X101-32x4d |  1x  |  43.4  |  38.4   |  [pattern](pattern_zoo/ic_resnext_32x4d_k9.json)   | [ckpt](ckpt/segmentation/faster-rcnn-ic-x101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/x101_imagenet_retrain/ckpt.pth.tar) |
-| Cascade-RCNN-FPN |    IC-R50     |  1x  |  43.4  |  36.8   | [pattern](pattern_zoo/segmentation/ic_r50_k9.json) | [ckpt](ckpt/segmentation/cascade-rcnn-ic-r50/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/r50_imagenet_retrain/ckpt.pth.tar) |
-| Cascade-RCNN-FPN |    IC-R101    |  1x  |  45.7  |  38.7   |    [pattern](pattern_zoo/ic_resnet101_k9.json)     | [ckpt](ckpt/segmentation/cascade-rcnn-ic-r101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/r101_imagenet_retrain/ckpt.pth.tar) |
-| Cascade-RCNN-FPN | IC-X101-32x4d |  1x  |  46.4  |  39.1   |  [pattern](pattern_zoo/ic_resnext_32x4d_k9.json)   | [ckpt](ckpt/segmentation/cascade-rcnn-ic-x101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/x101_imagenet_retrain/ckpt.pth.tar) |
+|     Detector     | Backbone |  Lr  | box AP | mask AP |                     dilation_pattern                     |                          checkpoint                          |
+| :--------------: | :------: | :--: | :----: | :-----: | :------------------------------------------------------: | :----------------------------------------------------------: |
+|  Mask-RCNN-FPN   |  IC-R50  |  1x  |  40.0  |  35.9   | [pattern](pattern_zoo/segmentation/ic_resnet50_k9.json)  | [ckpt](ckpt/segmentation/faster-rcnn-ic-r50/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/r50_imagenet_retrain/ckpt.pth.tar) |
+|  Mask-RCNN-FPN   | IC-R101  |  1x  |  42.6  |  37.9   | [pattern](pattern_zoo/segmentation/ic_resnet101_k9.json) | [ckpt](ckpt/segmentation/faster-rcnn-ic-r101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/r101_imagenet_retrain/ckpt.pth.tar) |
+| Cascade-RCNN-FPN |  IC-R50  |  1x  |  43.4  |  36.8   | [pattern](pattern_zoo/segmentation/ic_resnet50_k9.json)  | [ckpt](ckpt/segmentation/cascade-rcnn-ic-r50/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/r50_imagenet_retrain/ckpt.pth.tar) |
+| Cascade-RCNN-FPN | IC-R101  |  1x  |  45.7  |  38.7   | [pattern](pattern_zoo/segmentation/ic_resnet101_k9.json) | [ckpt](ckpt/segmentation/cascade-rcnn-ic-r101/ckpt_e14.pth)/[imagenet_retrain_ckpt](ckpt/segmentation/segmentation/r101_imagenet_retrain/ckpt.pth.tar) |
 
 #### 2d Human Pose Estimation
 
