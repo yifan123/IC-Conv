@@ -4,7 +4,7 @@ This repository is an official implementation of the paper [Inception Convolutio
 
 ## Getting Started
 
-**Download** ImageNet pre-trained [checkpoints](https://drive.google.com/file/d/1Dx3q_4TjYsAuw7_egKIOG1WdqvMi-u2k/view?usp=sharing).
+**Download** ImageNet pre-trained [checkpoints](https://drive.google.com/file/d/11diajagP3BKekV4iztnkm_B2iN8opGUo/view?usp=sharing).
 
 Extract the file to get the following directory tree
 
