@@ -4,7 +4,7 @@ This repository is an official implementation of the paper [Inception Convolutio
 
 ## Getting Started
 
-**Download** ImageNet pre-trained [checkpoints](https://drive.google.com/file/d/11diajagP3BKekV4iztnkm_B2iN8opGUo/view?usp=sharing).
+**Download** ImageNet pre-trained checkpoints from [Google Drive](https://drive.google.com/file/d/11diajagP3BKekV4iztnkm_B2iN8opGUo/view?usp=sharing) or Baidu Drive(https://pan.baidu.com/s/1KQk9bQU_zn3xV09-yECDMg) with password `gq87`.
 
 Extract the file to get the following directory tree
 
