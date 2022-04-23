@@ -2,6 +2,12 @@
 
 This repository is an official implementation of the paper [Inception Convolution with Efficient Dilation Search](https://arxiv.org/pdf/2012.13587.pdf).
 
+## Performance
+
+Human pose estimation results on COCO
+
+![](D:\research\st\IC-Conv\img\human_pose_result.png)
+
 ## Getting Started
 
 **Download** ImageNet pre-trained checkpoints from [Google Drive](https://drive.google.com/file/d/11diajagP3BKekV4iztnkm_B2iN8opGUo/view?usp=sharing) or [Baidu Drive](https://pan.baidu.com/s/1KQk9bQU_zn3xV09-yECDMg) with password `gq87`.
