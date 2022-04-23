@@ -6,7 +6,7 @@ This repository is an official implementation of the paper [Inception Convolutio
 
 Human pose estimation results on COCO
 
-![](D:\research\st\IC-Conv\img\human_pose_result.png)
+![](img/human_pose_result.png)
 
 ## Getting Started
 
